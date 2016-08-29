@@ -6,7 +6,10 @@
   "scripts": {
     "start": "webpack",
     "zip": "zip -r aws index.js node_modules/",
-    "deploy": "put zip in s3 bucket for lambda func"
+    "postzip": "npm run deploy",
+    "lam": "node tasks/updateLambda",
+    "deploy": "node tasks/uploadZip",
+    "postdeploy": "rm aws.zip && npm run lam"
   },
   "author": "Adam Simpson",
   "license": "ISC",
