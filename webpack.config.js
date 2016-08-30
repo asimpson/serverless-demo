@@ -1,14 +1,27 @@
 const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
+
+const nodeModules = {};
+fs.readdirSync('node_modules')
+  .filter((x) => {
+    return ['.bin'].indexOf(x) === -1;
+  })
+  .filter(x => x === 'aws-sdk')
+  .forEach((mod) => {
+    nodeModules[mod] = 'commonjs ' + mod;
+  });
 module.exports = {
   entry: [
-    './Root.js'
+    './lambdas/renderIndexHTML.js'
   ],
   output: {
     path: __dirname,
     filename: "index.js",
     libraryTarget: 'commonjs2'
   },
-  target: 'electron',
+  externals: nodeModules,
+  target: 'node',
   module: {
     loaders: [
       {
