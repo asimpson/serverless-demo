@@ -7,7 +7,8 @@ const options = require('command-line-args')([
   { name: 'bucket', alias: 'b', type: String },
   { name: 'key', alias: 'k', type: String },
   { name: 'name', alias: 'n', type: String },
-  { name: 'handler', alias: 'h', type: String },
+  { name: 'handler', alias: 'a', type: String },
+  { name: 'help', alias: 'h', type: Boolean },
   { name: 'role', alias: 'r', type: String },
   { name: 'publish', alias: 'p', type: Boolean }
 ]);
@@ -20,7 +21,7 @@ if (options.help || _.isEmpty(options)){
     ['-b', 'bucket name'],
     ['-k', 'key(file) name'],
     ['-n', 'function name to update'],
-    ['-h', 'needs to end in .handler, name of function'],
+    ['-a', 'needs to end in .handler, name of function'],
     ['-r', 'e.g. arn:aws:iam::235125689288:role/ams-s3-lambda'],
     ['-p', 'publish?']
   );
