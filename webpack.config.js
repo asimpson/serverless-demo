@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-
+const pages = {};
 const nodeModules = {};
 fs.readdirSync('node_modules')
   .filter((x) => {
@@ -11,13 +11,17 @@ fs.readdirSync('node_modules')
   .forEach((mod) => {
     nodeModules[mod] = 'commonjs ' + mod;
   });
+
+fs.readdirSync('./lambdas')
+  .forEach((x) => {
+      var fileName = path.basename(x, '.js');
+      pages[fileName] = `./lambdas/${x}`;
+  });
 module.exports = {
-  entry: [
-    './lambdas/renderIndexHTML.js'
-  ],
+  entry: pages,
   output: {
     path: __dirname,
-    filename: "index.js",
+    filename: "./dist/[name].js",
     libraryTarget: 'commonjs2'
   },
   externals: nodeModules,

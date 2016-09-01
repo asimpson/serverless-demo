@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import Root from '../components/Root.js';
 const s3 = new aws.S3();
 
-const amsRenderIndex = (event, context, callback) => {
+const renderIndexHTML = (event, context, callback) => {
   const a = renderToString(<Root body={event.body}/>);
   const html = `
     <!doctype html>
@@ -32,4 +32,4 @@ const amsRenderIndex = (event, context, callback) => {
   });
 };
 
-exports.handler = amsRenderIndex;
+exports.handler = renderIndexHTML;
