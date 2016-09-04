@@ -1,27 +1,27 @@
-const webpack = require('webpack');
-const path = require('path');
-const fs = require('fs');
-const pages = {};
-const nodeModules = {};
+require('webpack')
+const path = require('path')
+const fs = require('fs')
+const pages = {}
+const nodeModules = {}
 fs.readdirSync('node_modules')
   .filter((x) => {
-    return ['.bin'].indexOf(x) === -1;
+    return ['.bin'].indexOf(x) === -1
   })
   .filter(x => x === 'aws-sdk')
   .forEach((mod) => {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
+    nodeModules[mod] = 'commonjs ' + mod
+  })
 
 fs.readdirSync('./lambdas')
   .forEach((x) => {
-      var fileName = path.basename(x, '.js');
-      pages[fileName] = `./lambdas/${x}`;
-  });
+    var fileName = path.basename(x, '.js')
+    pages[fileName] = `./lambdas/${x}`
+  })
 module.exports = {
   entry: pages,
   output: {
     path: __dirname,
-    filename: "./dist/[name].js",
+    filename: './dist/[name].js',
     libraryTarget: 'commonjs2'
   },
   externals: nodeModules,
@@ -38,4 +38,4 @@ module.exports = {
       }
     ]
   }
-};
+}
